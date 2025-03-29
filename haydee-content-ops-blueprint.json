@@ -1,9 +1,85 @@
 {
-  "name": "Haydee Content Ops Engine",
-  "teamId": 204551,
-  "folderId": 70638,
-  "scheduling": {
-    "type": "manual"
+  "metadata": {
+    "version": 1
   },
-  "blueprint": "{ \"metadata\": { \"version\": 1 }, \"flow\": [ { \"id\": 1, \"module\": \"webhooks.customHook\", \"version\": 1, \"parameters\": { \"hookName\": \"haydee_contentops_engine\" }, \"mapper\": {}, \"metadata\": { \"designer\": { \"x\": 0, \"y\": 0 } } }, { \"id\": 2, \"module\": \"openai-gpt-3:CreateCompletion\", \"version\": 1, \"parameters\": { \"__IMTCONN__\": 2435726 }, \"mapper\": { \"model\": \"gpt-4-turbo\", \"top_p\": \"1\", \"select\": \"chat\", \"messages\": [ { \"role\": \"system\", \"content\": \"Eres Haydeé Content Ops, estratega editorial experta en clusters SEO. Recibiste la keyword '{{1.keyword}}'. Devuélveme una lista de 5–10 keywords relacionadas según KD < 40, volumen > 100, intención relevante. Muestra en tabla: keyword, volumen, KD, intención, buyer persona.\" } ], \"max_tokens\": \"1500\", \"temperature\": \"0.8\", \"n_completions\": \"1\", \"response_format\": \"text\" }, \"metadata\": { \"designer\": { \"x\": 300, \"y\": 0 } } }, { \"id\": 3, \"module\": \"webhooks.respondToWebhook\", \"version\": 1, \"parameters\": {}, \"mapper\": { \"status\": \"200\", \"body\": \"✅ Keyword cluster generado y enviado.\" }, \"metadata\": { \"designer\": { \"x\": 600, \"y\": 0 } } } ], \"connections\": { \"1\": { \"next\": [ { \"module\": 2, \"map\": true } ] }, \"2\": { \"next\": [ { \"module\": 3, \"map\": true } ] } } }"
+  "flow": [
+    {
+      "id": 1,
+      "module": "webhooks.customHook",
+      "version": 1,
+      "parameters": {
+        "hookName": "haydee_contentops_engine"
+      },
+      "mapper": {},
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "openai-gpt-3:CreateCompletion",
+      "version": 1,
+      "parameters": {
+        "__IMTCONN__": 2435726
+      },
+      "mapper": {
+        "model": "gpt-4-turbo",
+        "top_p": "1",
+        "select": "chat",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Eres Haydeé Content Ops..."
+          }
+        ],
+        "max_tokens": "1500",
+        "temperature": "0.8",
+        "n_completions": "1",
+        "response_format": "text"
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 3,
+      "module": "webhooks.respondToWebhook",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "status": "200",
+        "body": "✅ Keyword cluster generado y enviado."
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      }
+    }
+  ],
+  "connections": {
+    "1": {
+      "next": [
+        {
+          "module": 2,
+          "map": true
+        }
+      ]
+    },
+    "2": {
+      "next": [
+        {
+          "module": 3,
+          "map": true
+        }
+      ]
+    }
+  }
 }
